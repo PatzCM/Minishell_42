@@ -110,6 +110,7 @@ void	ft_expander2(t_token *tokens, \
 			tokens->content = ft_expander_replace(tokens->content, \
 									ft_getenv(env, data), i++);
 			ft_expander_reset(tokens->content, &i);
+			ft_expander2(tokens, &i, data);
 		}
 		else if (ft_strchr(tokens->content, '$') != NULL)
 			ft_expander3(tokens, &i);

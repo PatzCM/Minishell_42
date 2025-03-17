@@ -31,6 +31,8 @@ int	ft_update_pwd(t_data *data, char *last_path)
 		ft_change_env(data, "PWD", current_pwd);
 	else
 		ft_add_env(data, "PWD", current_pwd);
+	if (!ft_getenv("OLDPWD", data))
+		ft_change_env(data, "OLDPWD", current_pwd);
 	return (1);
 }
 
@@ -52,29 +54,53 @@ void	ft_print_path_minus(char *path, t_bin_token *tokens)
 	}
 }
 
-int	ft_go_to_path(t_data *data, int option, char *last_path, t_bin_token *token)
+int	ft_go_to_path2(t_data *data, int option,
+			char *last_path, t_bin_token *token)
 {
 	char	*path;
 	int		return_value;
 
-	path = NULL;
-	if (option == 0)
-	{
-		path = ft_strdup(ft_getenv("HOME", data));
-		return_value = chdir(path);
-		ft_update_pwd(data, last_path);
-		if (!path)
-			return (ft_putstr_fd("minishell: cd: HOME not set\n", 2), 2);
-		return (free(path), return_value);
-	}
 	if (option == 1)
 	{
+		if (!ft_getenv("OLDPWD", data))
+			return (ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2), 2);
 		path = ft_strdup(ft_getenv("OLDPWD", data));
+		return_value = chdir(path);
+		if (return_value < 0)
+			return (ft_putstr_fd("minishell: cd: ", 2),
+				ft_putstr_fd(path, 2), free(path),
+				ft_putstr_fd(": No such file or directory\n", 2), 2);
 		ft_print_path_minus(path, token);
 		ft_update_pwd(data, last_path);
 		if (!path)
 			return (ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2), 2);
 	}
+	return (0);
+}
+
+int	ft_go_to_path(t_data *data, int option, char *last_path, t_bin_token *token)
+{
+	char	*path;
+	int		return_value;
+	int		tmp;
+
+	path = NULL;
+	if (option == 0)
+	{
+		if (!ft_getenv("HOME", data))
+			return (ft_putstr_fd("minishell: cd: HOME not set\n", 2), 2);
+		path = ft_strdup(ft_getenv("HOME", data));
+		return_value = chdir(path);
+		if (return_value < 0)
+			return (ft_putstr_fd("minishell: cd: ", 2),
+				ft_putstr_fd(path, 2), free(path),
+				ft_putstr_fd(": No such file or directory\n", 2), 2);
+		ft_update_pwd(data, last_path);
+		return (free(path), return_value);
+	}
+	tmp = ft_go_to_path2(data, option, last_path, token);
+	if (tmp)
+		return (free(path), tmp);
 	return_value = chdir(path);
 	free (path);
 	return (return_value);

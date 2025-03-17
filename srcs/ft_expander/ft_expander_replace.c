@@ -67,8 +67,7 @@ char	*ft_expander_replace(char *str, char *env, int start)
 	if (str[i] == '$')
 		i++;
 	while (str[i + j] && (ft_isalnum(str[i + j])
-			|| str[i + j] == '_' || str[i + j] == '?'
-			|| str[i + j] == '$'))
+			|| str[i + j] == '_' || str[i + j] == '?'))
 		j++;
 	new = ft_env_rep_sq_special(str, env, i, j);
 	free(str);
@@ -87,7 +86,7 @@ char	*ft_expander_replace_null(char *str, int start)
 		i++;
 	start = i;
 	if (str[i] && !ft_isdigit(str[i]) && str[i] != '$')
-		while (str[i] && str[i] != '$' &&(ft_isalnum(str[i])
+		while (str[i] && str[i] != '$' && (ft_isalnum(str[i])
 				|| str[i] == '_' || str[i] == '?') && i++);
 	else
 		i++;

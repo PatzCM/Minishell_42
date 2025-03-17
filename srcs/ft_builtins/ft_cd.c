@@ -40,12 +40,17 @@ void	ft_change_env(t_data	*data, char *key, char *dir)
 {
 	char	*new_value;
 
-	new_value = ft_strdup(dir);
-	if (!new_value)
+	if (dir)
 	{
-		ft_putstr_fd("Failed to allocate memory for new_value\n", 2);
-		return ;
+		new_value = ft_strdup(dir);
+		if (!new_value)
+		{
+			ft_putstr_fd("Failed to allocate memory for new_value\n", 2);
+			return ;
+		}
 	}
+	else
+		new_value = NULL;
 	ft_replace_env(data, key, new_value);
 	free(new_value);
 }

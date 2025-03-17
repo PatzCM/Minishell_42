@@ -51,6 +51,74 @@ t_token	*ft_pcmdf_first(t_token *tokens)
 	return (tokens);
 }
 
+int	ft_only_one_redir(t_token *tokens, t_token_type redir)
+{
+	int	count;
+
+	while (tokens)
+	{
+		count = 0;
+		while (tokens && tokens->type != PIPE)
+		{
+			if (tokens->type == redir && count == 0)
+				count++;
+			else if (tokens->type == redir && count > 0)
+				return (1);
+			tokens = tokens->next;
+		}
+		if (tokens && tokens->type == PIPE)
+			tokens = tokens->next;
+	}
+	return (0);
+}
+
+int	ft_only_one_redir_shor(t_token *tokens)
+{
+	int	s_redir;
+	int	d_redir;
+
+	while (tokens)
+	{
+		s_redir = 0;
+		d_redir = 0;
+		while (tokens && tokens->type != PIPE)
+		{
+			if (tokens->type == D_REDIRECT_IN && s_redir == 0)
+				d_redir++;
+			else if (tokens->type == D_REDIRECT_IN && s_redir > 0)
+				return (1);
+			if (tokens->type == REDIRECT_IN && d_redir == 0)
+				s_redir++;
+			else if (tokens->type == REDIRECT_IN && d_redir > 0)
+				return (1);
+			tokens = tokens->next;
+		}
+		if (tokens && tokens->type == PIPE)
+			tokens = tokens->next;
+	}
+	return (0);
+}
+
+int	ft_redirects(t_token *tokens, t_data **data)
+{
+	tokens = ft_put_cmd_first(tokens);
+	ft_redir_short_out_single(tokens);
+	while (ft_only_one_redir(tokens, REDIRECT_OUT))
+		ft_redir_short_out_single(tokens);
+	ft_redir_short_out_double(tokens);
+	while (ft_only_one_redir(tokens, D_REDIRECT_OUT))
+		ft_redir_short_out_double(tokens);
+	ft_redir_short_in_single(tokens);
+	while (ft_only_one_redir(tokens, REDIRECT_IN))
+		ft_redir_short_in_single(tokens);
+	ft_redir_short_out(tokens);
+	if (ft_heredoc(tokens, *data) == 130)
+		return (1);
+	(*data)->tokens_start = tokens;
+	(*data)->tokens = tokens;
+	return (0);
+}
+
 t_token	*ft_put_cmd_first(t_token *tokens)
 {
 	t_token	*head;
@@ -73,18 +141,17 @@ t_token	*ft_put_cmd_first(t_token *tokens)
 	return (head);
 }
 
-int	ft_redirects(t_token *tokens, t_data **data)
-{
-	tokens = ft_put_cmd_first(tokens);
-	(*data)->tokens_start = tokens;
-	(*data)->tokens = tokens;
-	ft_redir_short_out_single(tokens);
-	ft_redir_short_out_double(tokens);
-	ft_redir_short_out(tokens);
-	ft_redir_short_in_single(tokens);
-	if (ft_heredoc(tokens, *data) == 130)
-		return (1);
-	(*data)->tokens_start = tokens;
-	(*data)->tokens = tokens;
-	return (0);
-}
+/*int	ft_redirects(t_token *tokens, t_data **data)*/
+/*{*/
+/*	tokens = ft_put_cmd_first(tokens);*/
+/*	(*data)->tokens_start = tokens;*/
+/*	(*data)->tokens = tokens;*/
+/*	ft_redir_short_out_single(tokens);*/
+/*	ft_redir_short_out_double(tokens);*/
+/*	ft_redir_short_in_single(tokens);*/
+/*	if (ft_heredoc(tokens, *data) == 130)*/
+/*		return (1);*/
+/*	(*data)->tokens_start = tokens;*/
+/*	(*data)->tokens = tokens;*/
+/*	return (0);*/
+/*}*/

@@ -61,9 +61,10 @@ int	ft_len_env(char *str)
 	j = 0;
 	if (str[i++] == '$')
 		j += 1;
+	if (str[i] == '$')
+		return (i + 1);
 	while (str[i] && (ft_isalnum(str[i])
-			|| str[i] == '_' || str[i] == '?'
-			|| str[i] == '$'))
+			|| str[i] == '_' || str[i] == '?'))
 	{
 		if (str[i] == '\'' && !check)
 		{
@@ -80,8 +81,6 @@ void	ft_expander(t_token *tokens, t_data *data)
 {
 	size_t	i;
 
-	if (data->envp == NULL)
-		return ;
 	while (tokens)
 	{
 		i = 0;

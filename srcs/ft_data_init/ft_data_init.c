@@ -54,9 +54,9 @@ t_envp	*ft_new_env_node(t_data *data, char *envp)
 	new = malloc(sizeof(t_envp));
 	if (!new)
 		return (NULL);
-	tmp = ft_strchr_len(envp, '=');
-	if (tmp)
+	if (ft_strchr(envp, '=') != NULL)
 	{
+		tmp = ft_strchr_len(envp, '=');
 		new->key = ft_substr(envp, 0, tmp);
 		new->value = ft_strdup(&envp[tmp + 1]);
 		new->print = true;
@@ -79,14 +79,19 @@ void	ft_envlist_init(t_data *data, char **env)
 	int		i;
 
 	i = 0;
-	head = ft_new_env_node(data, env[0]);
-	envp = head;
-	while (env[++i])
+	if (env[0])
 	{
-		envp->next = ft_new_env_node(data, env[i]);
-		envp = envp->next;
+		head = ft_new_env_node(data, env[0]);
+		envp = head;
+		while (env[++i])
+		{
+			envp->next = ft_new_env_node(data, env[i]);
+			envp = envp->next;
+		}
+		data->envp = head;
 	}
-	data->envp = head;
+	else
+		data->envp = NULL;
 }
 
 t_data	*ft_data_init(char **envp)
