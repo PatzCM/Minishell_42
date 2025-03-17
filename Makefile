@@ -97,6 +97,7 @@ HEREDOC = srcs/ft_redirects/ft_heredoc/ft_heredoc.c \
 		  srcs/ft_redirects/ft_heredoc/ft_pseudo_heredoc.c
 
 REDIRS = 	srcs/ft_redirects/ft_redirects.c \
+			srcs/ft_redirects/ft_redirects_utils.c \
 			srcs/ft_redirects/ft_redir_short_out_single.c \
 			srcs/ft_redirects/ft_redir_short_out_double.c \
 			srcs/ft_redirects/ft_redir_short_out.c \

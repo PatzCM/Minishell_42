@@ -86,15 +86,15 @@ char	*ft_expander_replace_null(char *str, int start)
 		i++;
 	start = i;
 	if (str[i] && !ft_isdigit(str[i]) && str[i] != '$')
-		while (str[i] && str[i] != '$' && (ft_isalnum(str[i])
-				|| str[i] == '_' || str[i] == '?') && i++);
+		while (str[i] && (ft_isalnum(str[i])
+				|| str[i] == '_' || str[i] == '?') && ++i);
 	else
 		i++;
 	if (start != 1)
 		new = ft_substr(str, 0, start - 1);
 	else
 		new = NULL;
-	if (str[i] && str[i] != ' ')
+	if (str[i])
 		new = ft_strjoin_gnl(new, &str[i]);
 	return (free(str), new);
 }
