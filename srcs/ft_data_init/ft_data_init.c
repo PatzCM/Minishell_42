@@ -94,6 +94,30 @@ void	ft_envlist_init(t_data *data, char **env)
 		data->envp = NULL;
 }
 
+void	ft_shell_lvl(t_data *data)
+{
+	int		shell_lvl;
+	char	*idk;
+	t_envp	*tmp;
+
+	shell_lvl = 1;
+	tmp = data->envp;
+	while (tmp->next)
+	{
+		if (ft_strcmp(tmp->key, "SHLVL") == 0)
+		{
+			idk = ft_strdup(tmp->value);
+			free(tmp->value);
+			tmp->value = ft_itoa(ft_atoi(idk) + 1);
+			free(idk);
+			break;
+		}
+		if (!tmp->next)
+			break ;
+		tmp = tmp->next;
+	}
+}
+
 t_data	*ft_data_init(char **envp)
 {
 	t_data	*data;
@@ -118,6 +142,7 @@ t_data	*ft_data_init(char **envp)
 		data->hostname = ft_strdup("unkown");
 	data->path = ft_get_path(data);
 	ft_prompt_init(data);
+	ft_shell_lvl(data);
 	data->bin_tokens = NULL;
 	data->heredoc_path = ft_heredoc_path(data);
 	return (data);
