@@ -57,9 +57,14 @@ void	ft_handle_redirects_out(t_data *data, t_bin_token *tokens, char *path)
 				||ft_strchr(tokens->redir_out->content, '*') != NULL)
 			&& !tokens->redir_out->quotes)
 			ft_error_msg_redir(data, 2, tokens->redir_out->content, path);
-		if (access(tokens->redir_out->content, F_OK | W_OK) == -1)
+		if (access(tokens->redir_out->content, F_OK) != -1
+			&& access(tokens->redir_out->content, W_OK) == -1)
 			ft_error_msg_redir(data, 0, tokens->redir_out->content, path);
-		fd = open(tokens->redir_out->content, O_WRONLY | O_APPEND, 0);
+		if (access(tokens->redir_out->content, F_OK) == -1)
+			fd = open(tokens->redir_out->content, O_WRONLY | O_APPEND
+					| O_CREAT, 0644, 0);
+		else
+			fd = open(tokens->redir_out->content, O_WRONLY | O_APPEND, 0);
 		dup2(fd, STDOUT_FILENO);
 	}
 }

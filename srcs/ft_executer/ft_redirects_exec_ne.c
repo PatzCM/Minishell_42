@@ -82,9 +82,13 @@ int	ft_handle_redirects_out_ne(t_bin_token *tokens, char *path)
 		if (tokens->redir_out->content[0] == '$' && !tokens->redir_out->quotes)
 			return (ft_error_msg_redir_ne(2,
 					tokens->redir_out->content, path), 1);
-		if (access(tokens->redir_out->content, F_OK | W_OK) == -1)
+		if (access(tokens->redir_out->content, F_OK) != -1
+			&& access(tokens->redir_out->content, W_OK) == -1)
 			return (ft_error_msg_redir_ne(0,
 					tokens->redir_out->content, path));
+		if (access(tokens->redir_out->content, F_OK) == -1)
+			open(tokens->redir_out->content, O_WRONLY | O_APPEND
+				| O_CREAT, 0644, 0);
 	}
 	return (0);
 }
