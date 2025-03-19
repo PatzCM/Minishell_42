@@ -72,11 +72,6 @@ t_token	*ft_take_ros_out(t_token *tokens, t_token *tmp)
 
 int	ft_redir_short_out_single2(t_token *tokens, t_token **tmp, t_token *head)
 {
-	int	exists;
-	
-	exists = 0;
-	if (access(tokens->next->content, F_OK) == -1)
-		exists = 1;
 	if (((tokens->next->content[0] == '$'
 				|| ft_strchr(tokens->next->content, '*'))
 			&& tokens->next->quotes == 0)
@@ -87,8 +82,6 @@ int	ft_redir_short_out_single2(t_token *tokens, t_token **tmp, t_token *head)
 		(*tmp) = ft_rmv_ros_before(tokens, head);
 		return (1);
 	}
-	if (exists)
-		unlink(tokens->next->content);
 	(*tmp) = tokens;
 	return (0);
 }

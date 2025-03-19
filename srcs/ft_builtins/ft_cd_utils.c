@@ -74,6 +74,8 @@ int	ft_go_to_path2(t_data *data, int option,
 		ft_update_pwd(data, last_path);
 		if (!path)
 			return (ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2), 2);
+		free(path);
+		return (1);
 	}
 	return (0);
 }
@@ -85,6 +87,7 @@ int	ft_go_to_path(t_data *data, int option, char *last_path, t_bin_token *token)
 	int		tmp;
 
 	path = NULL;
+	return_value = 0;
 	if (option == 0)
 	{
 		if (!ft_getenv("HOME", data))

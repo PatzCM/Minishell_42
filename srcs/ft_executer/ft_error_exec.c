@@ -61,7 +61,7 @@ void	ft_command_not_found(t_data *data, char *path, char **array)
 	}
 	ft_command_not_found2(data, path);
 	free(path);
-	ft_free(127, NULL, data, 1);
+	ft_free(127, NULL, data, 0);
 }
 
 void	ft_error_msg_redir(t_data *data, int type, char *redir, char *path)
