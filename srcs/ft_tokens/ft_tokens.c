@@ -12,6 +12,15 @@
 
 #include "ft_tokens.h"
 
+int	ft_token_maker2(t_token *token, char **commands, int i)
+{
+	token->quotes = 0;
+	if (ft_strchr(commands[i], '"') || ft_strchr(commands[i], '\''))
+	token->quotes = 1;
+	if (!commands[i + 1])
+		return (1);
+	return (0);
+}
 t_token	*ft_token_maker(char **commands)
 {
 	t_token	*token;
@@ -28,10 +37,8 @@ t_token	*ft_token_maker(char **commands)
 		token->content = ft_strdup(commands[i]);
 		token->type = CMD;
 		token->heredoc = NULL;
-		if (ft_strchr(commands[i], '"') || ft_strchr(commands[i], '\''))
-			token->quotes = 1;
-		token->quotes = 0;
-		if (!commands[i + 1])
+		token->del = 0;
+		if (ft_token_maker2(token, commands, i))
 			break ;
 		token->next = ft_calloc(sizeof(t_token), 1);
 		token = token->next;

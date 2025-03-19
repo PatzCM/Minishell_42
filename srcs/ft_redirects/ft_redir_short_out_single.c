@@ -6,7 +6,7 @@
 /*   By: afogonca <afogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 11:41:21 by afogonca          #+#    #+#             */
-/*   Updated: 2025/03/02 12:35:05 by afogonca         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:02:58 by afogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ t_token	*ft_take_ros_out(t_token *tokens, t_token *tmp)
 
 int	ft_redir_short_out_single2(t_token *tokens, t_token **tmp, t_token *head)
 {
+	if (access(tokens->next->content, F_OK) == -1)
+		tokens->next->del = 1;
 	if (((tokens->next->content[0] == '$'
 				|| ft_strchr(tokens->next->content, '*'))
 			&& tokens->next->quotes == 0)

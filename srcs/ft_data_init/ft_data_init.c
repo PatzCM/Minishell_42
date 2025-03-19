@@ -94,48 +94,12 @@ void	ft_envlist_init(t_data *data, char **env)
 		data->envp = NULL;
 }
 
-void	ft_shell_lvl(t_data *data)
-{
-	int		shell_lvl;
-	char	*idk;
-	t_envp	*tmp;
-
-	shell_lvl = 1;
-	tmp = data->envp;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->key, "SHLVL") == 0)
-		{
-			idk = ft_strdup(tmp->value);
-			free(tmp->value);
-			tmp->value = ft_itoa(ft_atoi(idk) + 1);
-			free(idk);
-			break;
-		}
-		if (!tmp->next)
-			break ;
-		tmp = tmp->next;
-	}
-	if (data->envp && !tmp->next && ft_strcmp(tmp->key, "SHLVL") != 0)
-		tmp->next = ft_new_env_node(data, "SHLVL=1");
-	if (!data->envp)
-		data->envp = ft_new_env_node(data, "SHLVL=1");
-}
-
 t_data	*ft_data_init(char **envp)
 {
 	t_data	*data;
 
 	data = malloc(sizeof(t_data));
-	data->tokens = NULL;
-	data->tokens_start = NULL;
-	data->tokens_end = NULL;
-	data->bin_tokens = NULL;
-	data->command = NULL;
-	data->args = NULL;
-	data->prompt = NULL;
-	data->envp = NULL;
-	data->user = NULL;
+	ft_data_init2(data);
 	data->exit_status = 0;
 	ft_envlist_init(data, envp);
 	data->user = getenv("USER");
@@ -146,7 +110,7 @@ t_data	*ft_data_init(char **envp)
 		data->hostname = ft_strdup("unkown");
 	data->path = ft_get_path(data);
 	ft_prompt_init(data);
-	/*ft_shell_lvl(data);*/
+	ft_shell_lvl(data);
 	data->bin_tokens = NULL;
 	data->heredoc_path = ft_heredoc_path(data);
 	return (data);

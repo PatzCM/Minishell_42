@@ -6,7 +6,7 @@
 /*   By: afogonca <afogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 08:41:48 by afogonca          #+#    #+#             */
-/*   Updated: 2025/03/02 12:34:57 by afogonca         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:01:41 by afogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ t_token	*ft_take_rod_out(t_token *tokens, t_token *tmp)
 
 int	ft_redir_short_out_double2(t_token *tokens, t_token **tmp, t_token *head)
 {
+	if (access(tokens->next->content, F_OK) == -1)
+		tokens->next->del = 1;
 	if (((tokens->next->content[0] == '$'
 				|| ft_strchr(tokens->next->content, '*'))
 			&& tokens->next->quotes == 0)

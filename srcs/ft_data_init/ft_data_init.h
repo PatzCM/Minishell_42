@@ -6,7 +6,7 @@
 /*   By: afogonca <afogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:18:48 by afogonca          #+#    #+#             */
-/*   Updated: 2025/03/02 15:19:28 by afogonca         ###   ########.fr       */
+/*   Updated: 2025/03/19 11:44:49 by afogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ char	*ft_heredoc_path(t_data *data);
 t_envp	*ft_new_env_node(t_data *data, char *envp);
 void	ft_envlist_init(t_data *data, char **env);
 t_data	*ft_data_init(char **envp);
+void	ft_data_init2(t_data *data);
+void	ft_shell_lvl(t_data *data);
 
 #endif

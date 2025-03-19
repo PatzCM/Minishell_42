@@ -115,6 +115,7 @@ EXPANDER = srcs/ft_expander/ft_expander.c \
 RMV_QUOTES = srcs/ft_rmv_quotes/ft_rmv_quotes.c
 
 DATA_INIT = srcs/ft_data_init/ft_data_init.c \
+			srcs/ft_data_init/ft_data_init2.c \
 			srcs/ft_data_init/ft_getenv.c \
 			srcs/ft_data_init/ft_get_prompt.c
 

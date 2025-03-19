@@ -6,7 +6,7 @@
 /*   By: afogonca <afogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:40:30 by afogonca          #+#    #+#             */
-/*   Updated: 2025/03/04 15:45:34 by afogonca         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:02:18 by afogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int	ft_handle_redirects_ne(t_bin_token *tokens, char *path)
 {
 	if (tokens->first_redir == 1)
 	{
+		if (tokens->redir_out && tokens->redir_out->del == 1)
+			unlink(tokens->redir_out->content);
 		if (ft_handle_redirects_in_ne(tokens, path))
 			return (1);
 		if (ft_handle_redirects_out_ne(tokens, path))

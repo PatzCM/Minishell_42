@@ -25,21 +25,19 @@ char	**ft_envp_list2array(t_envp *env)
 	while (tmp && ++i)
 		tmp = tmp->next;
 	array = ft_calloc(sizeof(char *), i + 1);
-	i = 0;
+	i = -1;
 	tmp = env;
 	while (tmp)
 	{
 		if (tmp->key && tmp->value)
 		{
-			array[i] = ft_strdup(tmp->key);
+			array[++i] = ft_strdup(tmp->key);
 			if (tmp->value)
 				array[i] = ft_strjoin_gnl(ft_strjoin_gnl(array[i],
-						"="), tmp->value);
-			i++;
+							"="), tmp->value);
 		}
 		tmp = tmp->next;
 	}
-	array[i] = NULL;
 	return (array);
 }
 
