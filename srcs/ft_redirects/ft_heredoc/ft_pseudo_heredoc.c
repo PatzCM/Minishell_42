@@ -46,7 +46,8 @@ void	ft_del_pseudo_heredocs(t_token *tokens, t_data *data)
 			tokens->next = tokens->next->next->next;
 			ft_free_token(tmp2);
 		}
-		tokens = tokens->next;
+		else
+			tokens = tokens->next;
 	}
 	(void) data;
 }

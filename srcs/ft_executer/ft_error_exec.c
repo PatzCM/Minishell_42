@@ -68,6 +68,8 @@ void	ft_error_msg_redir(t_data *data, int type, char *redir, char *path)
 {
 	if (path)
 		free(path);
+	if (!redir)
+		ft_free(1, NULL, data, 0);
 	if (type == 0)
 	{
 		ft_putstr_fd(redir, 2);

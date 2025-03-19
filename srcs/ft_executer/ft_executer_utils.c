@@ -29,12 +29,15 @@ char	**ft_envp_list2array(t_envp *env)
 	tmp = env;
 	while (tmp)
 	{
-		array[i] = ft_strdup(tmp->key);
-		if (tmp->value)
-			array[i] = ft_strjoin_gnl(ft_strjoin_gnl(array[i],
+		if (tmp->key && tmp->value)
+		{
+			array[i] = ft_strdup(tmp->key);
+			if (tmp->value)
+				array[i] = ft_strjoin_gnl(ft_strjoin_gnl(array[i],
 						"="), tmp->value);
+			i++;
+		}
 		tmp = tmp->next;
-		i++;
 	}
 	array[i] = NULL;
 	return (array);
