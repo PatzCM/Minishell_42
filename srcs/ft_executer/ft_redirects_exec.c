@@ -62,7 +62,7 @@ void	ft_handle_redirects_out(t_data *data, t_bin_token *tokens, char *path)
 			ft_error_msg_redir(data, 0, tokens->redir_out->content, path);
 		if (access(tokens->redir_out->content, F_OK) == -1)
 			fd = open(tokens->redir_out->content, O_WRONLY | O_APPEND
-					| O_CREAT, 0644, 0);
+					| O_CREAT, 0644);
 		else
 			fd = open(tokens->redir_out->content, O_WRONLY | O_APPEND, 0);
 		dup2(fd, STDOUT_FILENO);

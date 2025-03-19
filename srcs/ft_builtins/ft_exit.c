@@ -58,7 +58,7 @@ int	ft_exit(t_data *data, t_bin_token *tokens, int exit)
 	}
 	else
 		status = ft_verify_numeric_exit(tokens, 0);
-	if (tokens->args[1] && ft_atoi(tokens->args[1]) < 0 && status < 0)
+	if (tokens->args[1] && ft_atoi(tokens->args[1]) < -255 && status < -255)
 		ft_free(255, NULL, data, 0);
 	ft_free(status, NULL, data, 0);
 	return (0);

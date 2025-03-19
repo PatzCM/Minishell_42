@@ -90,14 +90,14 @@ int	ft_redirects(t_token *tokens, t_data **data)
 {
 	tokens = ft_put_cmd_first(tokens);
 	ft_redir_short_out_single(tokens);
-	while (ft_only_one_redir(tokens, REDIRECT_OUT))
-		ft_redir_short_out_single(tokens);
+	/*while (ft_only_one_redir(tokens, REDIRECT_OUT))*/
+	/*	ft_redir_short_out_single(tokens);*/
 	ft_redir_short_out_double(tokens);
-	while (ft_only_one_redir(tokens, D_REDIRECT_OUT))
-		ft_redir_short_out_double(tokens);
+	/*while (ft_only_one_redir(tokens, D_REDIRECT_OUT))*/
+	/*	ft_redir_short_out_double(tokens);*/
 	ft_redir_short_in_single(tokens);
-	while (ft_only_one_redir(tokens, REDIRECT_IN))
-		ft_redir_short_in_single(tokens);
+	/*while (ft_only_one_redir(tokens, REDIRECT_IN))*/
+	/*	ft_redir_short_in_single(tokens);*/
 	ft_redir_short_out(tokens);
 	if (ft_heredoc(tokens, *data) == 130)
 		return (1);
