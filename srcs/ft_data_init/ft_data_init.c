@@ -102,7 +102,7 @@ void	ft_shell_lvl(t_data *data)
 
 	shell_lvl = 1;
 	tmp = data->envp;
-	while (tmp->next)
+	while (tmp)
 	{
 		if (ft_strcmp(tmp->key, "SHLVL") == 0)
 		{
@@ -116,6 +116,10 @@ void	ft_shell_lvl(t_data *data)
 			break ;
 		tmp = tmp->next;
 	}
+	if (data->envp && !tmp->next && ft_strcmp(tmp->key, "SHLVL") != 0)
+		tmp->next = ft_new_env_node(data, "SHLVL=1");
+	if (!data->envp)
+		data->envp = ft_new_env_node(data, "SHLVL=1");
 }
 
 t_data	*ft_data_init(char **envp)
@@ -142,7 +146,7 @@ t_data	*ft_data_init(char **envp)
 		data->hostname = ft_strdup("unkown");
 	data->path = ft_get_path(data);
 	ft_prompt_init(data);
-	ft_shell_lvl(data);
+	/*ft_shell_lvl(data);*/
 	data->bin_tokens = NULL;
 	data->heredoc_path = ft_heredoc_path(data);
 	return (data);
