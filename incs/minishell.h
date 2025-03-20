@@ -54,5 +54,6 @@ void			ft_take_out_par(t_token **tokens, int run);
 
 void			ft_print_tokens(t_token *tokens, t_data *data, int tab);
 void			treeprint(t_bin_token *cur, int depth);
+char			**ft_command_init(t_data *data);
 
 #endif

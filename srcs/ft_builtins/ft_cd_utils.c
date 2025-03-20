@@ -103,7 +103,7 @@ int	ft_go_to_path(t_data *data, int option, char *last_path, t_bin_token *token)
 	}
 	tmp = ft_go_to_path2(data, option, last_path, token);
 	if (tmp)
-		return (free(path), tmp);
+		return (free(path), 0);
 	return_value = chdir(path);
 	free (path);
 	return (return_value);

@@ -58,7 +58,7 @@ INFO = \033[36mℹ\033[0m
 
 NAME = minishell
 LIBS = libs/libft/libft.a 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 CC = cc
 RM = rm -f
 

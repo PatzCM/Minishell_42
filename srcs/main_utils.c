@@ -87,3 +87,29 @@ t_token	*ft_return_after_con(t_token *tokens)
 	}
 	return (now);
 }
+
+char	**ft_command_init(t_data *data)
+{
+	char	*command_in;
+	char	*command;
+	char	**command_list;
+
+	ft_prompt_init(data);
+	command_in = readline(data->prompt);
+	if (!command_in)
+		ft_free(data->exit_status, NULL, data, 1);
+	command = ft_strtrim(command_in, " \t\n");
+	if (!command || !ft_strlen(command))
+	{
+		if (command && ft_strlen(command))
+			data->exit_status = 2;
+		if (command)
+			free (command);
+		return (NULL);
+	}
+	add_history(command_in);
+	command_list = ft_split_cmds(command);
+	free(command);
+	free(command_in);
+	return (command_list);
+}

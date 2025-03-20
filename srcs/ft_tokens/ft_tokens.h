@@ -6,7 +6,7 @@
 /*   By: afogonca <afogonca@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:35:33 by afogonca          #+#    #+#             */
-/*   Updated: 2025/03/02 15:36:05 by afogonca         ###   ########.fr       */
+/*   Updated: 2025/03/20 09:44:16 by afogonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ void	ft_tokens_cat3(t_data **data);
 void	ft_tokens_cat(t_data **data);
 int		ft_token_start(char **commands, t_data *data);
 void	ft_expander_plus(t_data *data);
+int		ft_token_maker2(t_token *token, char **commands, int i);
 
 #endif

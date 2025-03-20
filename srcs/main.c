@@ -14,32 +14,6 @@
 
 int	g_signal_received = 0;
 
-char	**ft_command_init(t_data *data)
-{
-	char	*command_in;
-	char	*command;
-	char	**command_list;
-
-	ft_prompt_init(data);
-	command_in = readline(data->prompt);
-	if (!command_in)
-		ft_free(data->exit_status, NULL, data, 1);
-	command = ft_strtrim(command_in, " \t\n");
-	if (!command || !ft_strlen(command))
-	{
-		if (command && ft_strlen(command))
-			data->exit_status = 2;
-		if (command)
-			free (command);
-		return (NULL);
-	}
-	add_history(command_in);
-	command_list = ft_split_cmds(command);
-	free(command);
-	free(command_in);
-	return (command_list);
-}
-
 int	ft_loop2(t_data *data)
 {
 	if (ft_wildcards(data) || ft_redirects(data->tokens, &data))
@@ -61,31 +35,49 @@ int	ft_loop2(t_data *data)
 	return (0);
 }
 
-void	ft_loop3(t_data *data, int run)
+int	ft_loop4(t_data *data, int *run)
 {
 	t_token_type	type_tmp;
+
+	type_tmp = ft_return_con_type(data->tokens);
+	data->tokens_end = ft_tokens_end(type_tmp, data);
+	if ((*run) == 1)
+		if (ft_loop2(data))
+			return (2);
+	if (type_tmp == NON)
+		return (1);
+	(*run) = ft_get_run(data, type_tmp);
+	ft_take_out_par(&data->tokens_end, *run);
+	ft_free_loop3(data);
+	return (0);
+}
+
+void	ft_loop3(t_data *data, int run)
+{
+	int	tmp;
 
 	ft_take_out_par(&data->tokens, run);
 	data->tokens_start = data->tokens;
 	while (1)
 	{
+		tmp = 0;
 		if (data->tokens->type == IN_PAR && !run)
 		{
 			run = ft_skip_par(&data->tokens, data);
+			data->tokens_end = data->tokens;
 			data->tokens_start = data->tokens;
 			if (run == -1 || !data->tokens)
 				break ;
+			ft_take_out_par(&data->tokens_end, run);
+			data->tokens = data->tokens_end;
+			data->tokens_start = data->tokens;
 		}
-		type_tmp = ft_return_con_type(data->tokens);
-		data->tokens_end = ft_tokens_end(type_tmp, data);
-		if (run == 1)
-			if (ft_loop2(data))
-				continue ;
-		if (type_tmp == NON)
+		else
+			tmp = ft_loop4(data, &run);
+		if (tmp == 1)
 			break ;
-		run = ft_get_run(data, type_tmp);
-		ft_take_out_par(&data->tokens_end, run);
-		ft_free_loop3(data);
+		if (tmp == 2)
+			continue ;
 	}
 }
 
