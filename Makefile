@@ -128,7 +128,8 @@ WILDCARDS = srcs/ft_wildcards/ft_wildcards.c \
 			srcs/ft_wildcards/ft_wildcards_utils.c
 
 TOKENS = srcs/ft_tokens/ft_split_ms.c \
-		srcs/ft_tokens/ft_tokens.c
+		srcs/ft_tokens/ft_tokens.c \
+		srcs/ft_tokens/ft_tokens2.c
 
 SRCS =	srcs/main.c srcs/main_utils.c srcs/main_utils2.c \
 		$(WILDCARDS) $(DATA_INIT) $(FREE) $(TOKENS) \
