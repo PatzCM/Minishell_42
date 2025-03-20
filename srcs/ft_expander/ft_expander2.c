@@ -14,7 +14,6 @@
 
 void	ft_expander_reset(char *str, size_t *i)
 {
-	*i = 0;
 	ft_skip_single_quote(str, i);
 	while (str[(*i)] != '\0'
 		&& str[(*i)] != '$'
@@ -43,9 +42,10 @@ void	ft_skip_single_quote(char *str, size_t *i)
 			(*i)++;
 			while (str[(*i)] && str[*i] != '\'')
 				(*i)++;
-			(*i)++;
+			if (str[(*i)] == '\'')
+				(*i)++;
 		}
-		else
+		else if (str[(*i)])
 			(*i)++;
 	}
 }
