@@ -30,11 +30,9 @@ void	ft_data_init2(t_data *data)
 
 void	ft_shell_lvl(t_data *data)
 {
-	int		shell_lvl;
 	char	*idk;
 	t_envp	*tmp;
 
-	shell_lvl = 1;
 	tmp = data->envp;
 	while (tmp)
 	{
