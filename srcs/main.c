@@ -27,6 +27,7 @@ int	ft_loop2(t_data *data)
 		if (data->bin_tokens)
 			ft_free_tree(data->bin_tokens, 1);
 		data->bin_tokens = ft_bin_tokens(data);
+		signal(SIGINT, SIG_IGN);
 		ft_run_cmds(data);
 		ft_signals();
 		dup2(1, STDOUT_FILENO);
