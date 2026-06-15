@@ -291,7 +291,8 @@ The shell uses a **linked-list-based token stream** that is then converted into 
 ## Author
 
 | | |
-|**palexand| [42 Porto](https://www.42porto.com/)|
+|---|---|
+|**palexand** | [42 Porto](https://www.42porto.com/)|
 | **afogonca** | [42 Porto](https://www.42porto.com/) |
 
 ---
